@@ -23,8 +23,8 @@ import Data.Maybe (Maybe(Nothing, Just))
 import Data.Newtype (class Newtype)
 import Data.String (joinWith)
 import Data.Symbol (class IsSymbol, SProxy(..), reflectSymbol)
-import Data.URI.Authority (Authority, printAuthority)
-import Data.URI.Scheme (URIScheme, printScheme)
+import Data.URI.Authority (Authority, print) as Authority 
+import Data.URI.Scheme (Scheme, print) as Scheme
 import Network.HTTP.Affjax (AJAX, AffjaxRequest, affjax, defaultRequest)
 import Type.Proxy (Proxy(..))
 import Type.Trout (type (:<|>), type (:=), type (:>), Capture, CaptureAll, Lit, Method, QueryParam, QueryParams, Resource)
@@ -33,7 +33,7 @@ import Type.Trout.ContentType.JSON (JSON)
 import Type.Trout.PathPiece (class ToPathPiece, toPathPiece)
 import Type.Trout.Record as Record
 
-newtype BaseURI = BaseURI { scheme :: URIScheme , authority :: Authority }
+newtype BaseURI = BaseURI { scheme :: Scheme.Scheme , authority :: Authority.Authority }
 
 derive instance eqBaseURI :: Eq BaseURI
 derive instance genericBaseURI :: Generic BaseURI _
@@ -62,7 +62,7 @@ toAffjaxRequest req =
   defaultRequest { url = foldMap baseURI req.baseURI <> "/" <> joinWith "/" req.path }
     where
       baseURI (BaseURI {authority, scheme}) =
-        printScheme scheme <> printAuthority authority
+        Scheme.print scheme <> Authority.print authority
 
 class HasClients r mk | r -> mk where
   getClients :: Proxy r -> RequestBuilder -> mk
