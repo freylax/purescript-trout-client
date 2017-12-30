@@ -15,7 +15,7 @@
   "dependencies": {
     "purescript-prelude": "^3.0.0",
     "purescript-trout": "git://github.com/anttih/purescript-trout#update-uri-smolder",
-    "purescript-affjax": "^5.0.0",
+    "purescript-affjax": "^4.0.0",
     "purescript-uri": "^4.0.0"
   },
   "devDependencies": {
